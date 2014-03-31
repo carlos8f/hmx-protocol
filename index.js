@@ -40,9 +40,19 @@ module.exports = function (options) {
       // find headers in the stream
       // return a stream that emits 'headers' object, and
       // then pauses. Resume for data.
-      var;
+      var str = '';
       stream.on('data', function (data) {
-
+        str += data;
+        if (str.length >= 3) {
+          var versionMatch = str.match(/^HMX\/(\d+)/);
+        }
+        str = str.replace(/\r/g, '');
+        var headerEnd = str.indexOf('\n\n');
+        if (~headerEnd) {
+          var lines = str.substr(, headerEnd + 1)
+            .split('\n')
+            .filter()
+        }
       });
     },
     writeHeaders: function (headers) {

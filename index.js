@@ -5,6 +5,8 @@ var cryptic = require('cryptic')
   , BlockStream = require('block-stream')
   , combine = require('stream-combiner')
   , through = require('through2')
+  , fs = require('fs')
+  , ss = require('stream-stream')
 
 module.exports = function (options) {
   options || (options = {});
@@ -18,15 +20,54 @@ module.exports = function (options) {
   if (options.privateKey) privateKey = ursa.coerceKey(privateKey);
 
   return {
+    composeMessage: function (headers, stream) {
+      // given headers object and stream, compose an
+      // HMX message envelope and return a readable stream.
+      var headers = this.writeHeaders(headers)
+        , headerStream = Stream = through()
+
+      setImmediate(function () {
+        headerStream.write(headers, 'utf8');
+        headerStream.end();
+      });
+      var stream = ss({separator: '\n'});
+      stream.write(headerStream);
+      stream.write(fs.createReadStream(p));
+      stream.end();
+      return stream;
+    },
     readHeaders: function (stream) {
       // find headers in the stream
-      // return a stream that emits 'headers' object with
-      // object-format headers, and then pauses. Resume for data.
+      // return a stream that emits 'headers' object, and
+      // then pauses. Resume for data.
+      var;
+      stream.on('data', function (data) {
+
+      });
     },
     writeHeaders: function (headers) {
       // write headers object as string, in camelcase form
       // note: Hash, Secret, and Signature fields always go last,
       // in that order.
+      return keys
+        .sort(function (a, b) {
+          a = a.toLowerCase();
+          b = b.toLowerCase();
+          if (a === b) return 0;
+          switch (a) {
+            case 'signature': return 1;
+            case 'secret': return b === 'signature' ? -1 : 1;
+            case 'hash': return b.match(/^(signature|secret)$/) ? -1 : 1;
+            default: return a < b ? -1 : 1;
+          }
+        }
+        .map(function (key) {
+          return key
+            .split('-').map(function (part) {
+              return part.charAt(0).toUpperCase() + part.substr(1).toLowerCase();
+            })
+            .join('-') + ': ' + headers[key];
+        });
     },
     hash: function (data, encoding) {
       // perform SHA256(data), the standard hash function
@@ -34,12 +75,26 @@ module.exports = function (options) {
         .update(data, encoding)
         .digest(encoding);
     },
-    hashBase: function (headers) {
-      // return a standardized buffer representation of
-      // object-format headers for hashing.
+    hashStream: function () {
+      // return a writable, readable stream. data written to the
+      // stream will have its hash calculated and returned on the
+      // readable end as 'data'.
+      return crypto.createHash('sha256');
+    },
+    hashBase: function (headers, encoding) {
+      // given a headers object, return a standardized
+      // string (with encoding) or buffer representation for hashing.
+      var headersCopy = {};
+      Object.keys(headers).forEach(function (k) {
+        if (!k.match(/^(hash|secret|signature)$/i)) headersCopy[k] = headers[k];
+      });
+      var buf = Buffer(this.writeHeaders(headersCopy), 'utf8');
+      return encoding
+        ? buf.toString(encoding)
+        : buf;
     },
     hashHeaders: function (headers, cb) {
-      // given object-format headers, generate hashcash, observing
+      // given headers object, generate hashcash, observing
       // optional Difficulty header, and excluding Hash, Secret,
       // and Signature fields. Add Hash header with result, and
       // call cb() when done.

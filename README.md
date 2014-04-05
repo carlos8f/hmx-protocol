@@ -2,87 +2,93 @@
 
 Library for working with HMX messages and blockchain
 
-## Raw message format
+### private message
 
 ```
-HMX/(version)
-Type: (private or public)
-Content-Type: (content type for body)
-Content-Length: (content length for body, excluding padding)
-Part: 1/1
-Digest: (hash of body)
-Multi-Digest: (hash of all parts, only if not Part 1/1)
-Date: (RFC whatever)
-To: (HMX addresses)
-Cc: (HMX addresses)
-Bcc: (HMX addresses)
-From: (HMX address w/ fingerprint)
-Subject: (my subject)
-User-Agent: (HXM client user-agent that created this)
-Hash: (hash of above headers)
-Signature: (signature of the above Hash, using From pubkey)
+HTTP/1.1 200 OK
+Date: Tue, 15 Nov 1994 08:12:31 GMT
+Content-Length: 3473
+X-HMX-Type: private
+X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
+X-HMX-Key: 2aee42bbc5e4c4fddd82d0669630e7c73bf936b43865638bec38b95784fc645e
+X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
+X-HMX-Private: (encrypted private headers, base64)
+X-HMX-Difficulty: 6
+X-HMX-Nonce: 1
+X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
+X-HMX-Token: Y2NsLXBsYXktc29mdC1taWRpCj09PT09PT09PT0
+X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
-(This is the plaintext message body, can contain attachments, etc)
+(body)
 ```
 
-## PUT key
-
-Difficulty may be scaled based on auth, type, size, etc.
+### private message w/ external key list
 
 ```
-PUT /000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
-HMX/(version)
-Type: key
-Last: 00000000000008a3a41b85b8b29ad444def299fee21793cd8b9e567eab02cd81 (last hash pushed to server)
-Digest: (hash of body)
-Difficulty: (current server difficulty)
-Time: (current timestamp)
-Nonce: (cryptographic nonce)
-Content-Encoding: octet-stream
-Content-Length: (length, probably capped/padded anyway)
-Hash: 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f (hash of above headers)
---- auth part ---
-Secret: (shared secret between client and server, identifies "From" pubkey
-Signature: (sign the Hash using "From" pubkey)
---- end auth ---
+HTTP/1.1 200 OK
+Date: Tue, 15 Nov 1994 08:12:31 GMT
+Content-Length: 3473
+Link: </000000ae26ee5322ef722a193a1cc01cdc41ae39b789df0d906bd6cf63d756bc>; rel="http://h-mx.org/spec/list"
+X-HMX-Type: private
+X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
+X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
+X-HMX-Private: (encrypted private headers, base64)
+X-HMX-Difficulty: 6
+X-HMX-Nonce: 1
+X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
+X-HMX-Token: Y2NsLXBsYXktc29mdC1taWRpCj09PT09PT09PT0
+X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
-(this is the RSA-encrypted AES key)
+(body)
 ```
 
-## PUT message
-
-Capped and padded at 128kb, let's say.
+### key list
 
 ```
-PUT /000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
-HMX/(version)
-Type: (public or private)
-Last: 00000000000008a3a41b85b8b29ad444def299fee21793cd8b9e567eab02cd81 (last hash pushed to server)
-Digest: (hash of body)
---- public only ---
-Part: 1/1
-Multipart-Digest: (hash of all parts)
-Content-Type: (content type of body)
---- end public ---
---- private only ---
-Key: 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f (hash of key record from blockchain)
---- end private ---
-Difficulty: (current server difficulty)
-Time: (current timestamp)
-Nonce: (cryptographic nonce)
-Content-Length: (length, probably capped/padded anyway)
-Hash: 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f (hash of above headers)
---- auth part ---
-Secret: (shared secret between client and server, identifies "From" pubkey
-Signature: (sign the Hash using "From" pubkey)
---- end auth ---
+HTTP/1.1 200 OK
+Date: Tue, 15 Nov 1994 08:12:31 GMT
+Content-Length: 3473
+X-HMX-Type: keys
+X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
+X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
+X-HMX-Difficulty: 6
+X-HMX-Nonce: 1
+X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
+X-HMX-Token: Y2NsLXBsYXktc29mdC1taWRpCj09PT09PT09PT0
+X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
-(this is the raw message, AES-encrypted if Key specified, followed by random padding)
+876eb14acb3cd7a45f579768c06348afd4cb0ce9a44ba2900a1b6ea97738a19e carlos8f@h-mx.net
+095a2daf3b2379394505b647297ca69ff83c54dcb9fb12f0f535a45d29ab9a41
+1487e42256b263bb7c5a32d21cdfb254d5616f531b397108d5d64813dbdcb64b
+fde06efaf57c164f6e87c451ef29b70f867cdcac64273274737ecb39d094bd0a chris
 ```
 
-Note that if a message is public, Key header is not used, and body is not encrypted or padded, but still should be capped.
+### public message board
 
-Also note that for group messages, the Key header will be repeated since each recipient has the AES key RSA-encrypted specifically for them in the blockchain.
+```
+HTTP/1.1 200 OK
+Date: Tue, 15 Nov 1994 08:12:31 GMT
+Content-Type: text/plain
+Content-Length: 3473
+X-HMX-Type: public
+X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
+X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
+X-HMX-Part: 1/1
+X-HMX-Multi-Digest: de64152f540f23b96a179e489ba3dacaf579dc8dc23ccc5a546f97660f174be1
+X-HMX-From: carlos8f@h-mx.net
+X-HMX-To: hmx://h-mx.net/groups/test
+X-HMX-Thread: mcpwAqQv
+X-HMX-Subject: Testing HMX
+X-HMX-Agent: node-hmx/1.0
+X-HMX-Difficulty: 6
+X-HMX-Nonce: 1
+X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
+X-HMX-Token: Y2NsLXBsYXktc29mdC1taWRpCj09PT09PT09PT0
+X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
+
+(body)
+```
+
 
 - - -
 

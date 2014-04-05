@@ -10,25 +10,24 @@ Date: Tue, 15 Nov 1994 08:12:31 GMT
 Content-Length: 3473
 Link: </0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c>; rel="prev"
 X-HMX-Type: private
-X-HMX-Key: 2aee42bbc5e4c4fddd82d0669630e7c73bf936b43865638bec38b95784fc645e
+X-HMX-Key: MjE5NTRlODNhZTFjODBmZTE5MjdjNzAxY2E5OGEzYTRjNjc2MWQ4MmRjNjUyODgzMDc4MWY4YmU4YzNlNWJhNyAgLQo=
 X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
 X-HMX-Private: (encrypted private headers, base64)
+X-HMX-Expires: Tue, 15 Nov 1994 08:12:31 GMT
 X-HMX-Difficulty: 6
 X-HMX-Nonce: 1
 X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
-X-HMX-Token: Y2NsLXBsYXktc29mdC1taWRpCj09PT09PT09PT0
-X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
 (body)
 ```
 
 servers can enforce:
 
-- Expires header w/ maximum date
-- After expires date, GET request returns 410 Gone, HEAD returns 204 No Content
-- current session identified by Token, and Signature to prove it
-- max content-length per message
-- hashcash difficulty
+- `Expires` header w/ maximum date
+- After expires date, `GET` request returns `410 Gone`, `HEAD` returns `204 No Content`
+- `Authorization` header w/ current session ID/signature (not stored, not part of hash)
+- max `Content-Length` per message
+- `Difficulty` for hashcash
 
 ### private message w/ external key list
 
@@ -43,13 +42,9 @@ X-HMX-Private: (encrypted private headers, base64)
 X-HMX-Difficulty: 6
 X-HMX-Nonce: 1
 X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
-X-HMX-Token: Y2NsLXBsYXktc29mdC1taWRpCj09PT09PT09PT0
-X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
 (body)
 ```
-
-optional behavior: 
 
 ### key list
 
@@ -58,18 +53,16 @@ HTTP/1.1 200 OK
 Date: Tue, 15 Nov 1994 08:12:31 GMT
 Content-Length: 3473
 Link: </0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c>; rel="prev"
-X-HMX-Type: keys
+X-HMX-Type: key
 X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
 X-HMX-Difficulty: 6
 X-HMX-Nonce: 1
 X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
-X-HMX-Token: Y2NsLXBsYXktc29mdC1taWRpCj09PT09PT09PT0
-X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
-876eb14acb3cd7a45f579768c06348afd4cb0ce9a44ba2900a1b6ea97738a19e carlos8f@h-mx.net
-095a2daf3b2379394505b647297ca69ff83c54dcb9fb12f0f535a45d29ab9a41
-1487e42256b263bb7c5a32d21cdfb254d5616f531b397108d5d64813dbdcb64b
-fde06efaf57c164f6e87c451ef29b70f867cdcac64273274737ecb39d094bd0a chris
+QWdJQ0FnSUNBZ0lDQWdJQ0FnSUhKeVpXWWdVM2x1ZEdndFRtOWtaU0E2UEdGMWJqNXZaR1VwS1NrCg==
+YTdkYWY3NTU5ZDk3OTdhMmZlNjZiYjNiNjgzYjg5ODhlNTM2OTI4YjU1NmM3YWRmOGI5YjNlZmZhYjc0YzQ4OCAgLQo=
+MjE5NTRlODNhZTFjODBmZTE5MjdjNzAxY2E5OGEzYTRjNjc2MWQ4MmRjNjUyODgzMDc4MWY4YmU4YzNlNWJhNyAgLQo=
+NzhkODYwMTYxNmVlMTVmOTIxNjZmZThkZWZjZDA4ZDNmMmIxNTJhZjQ5ODExMWU4MjljZWU1MzNjZDE2NDY0YyAgLQo=
 ```
 
 ### public message board
@@ -79,9 +72,8 @@ HTTP/1.1 200 OK
 Date: Tue, 15 Nov 1994 08:12:31 GMT
 Content-Type: text/plain
 Content-Length: 3473
-Link: <hmx://h-mx.net/groups/test>; rel="section", <hmx://h-mx.net/groups/test/threads/mcpwAqQv>; rel="subsection"
+Link: </0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c>; rel="prev", <hmx://h-mx.net/groups/test>; rel="section", <hmx://h-mx.net/groups/test/threads/mcpwAqQv>; rel="subsection"
 X-HMX-Type: public
-X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
 X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
 X-HMX-Part: 1/1
 X-HMX-Multi-Digest: de64152f540f23b96a179e489ba3dacaf579dc8dc23ccc5a546f97660f174be1
@@ -92,8 +84,6 @@ X-HMX-Agent: node-hmx/1.0
 X-HMX-Difficulty: 6
 X-HMX-Nonce: 1
 X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
-X-HMX-Token: Y2NsLXBsYXktc29mdC1taWRpCj09PT09PT09PT0
-X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
 (body)
 ```

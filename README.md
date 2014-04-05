@@ -22,6 +22,14 @@ X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 (body)
 ```
 
+servers can enforce:
+
+- Expires header w/ maximum date
+- After expires date, GET request returns 410 Gone, HEAD returns 204 No Content
+- current session identified by Token, and Signature to prove it
+- max content-length per message
+- hashcash difficulty
+
 ### private message w/ external key list
 
 ```
@@ -40,6 +48,8 @@ X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
 (body)
 ```
+
+optional behavior: 
 
 ### key list
 
@@ -75,7 +85,8 @@ X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
 X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
 X-HMX-Part: 1/1
 X-HMX-Multi-Digest: de64152f540f23b96a179e489ba3dacaf579dc8dc23ccc5a546f97660f174be1
-X-HMX-From: carlos8f@h-mx.net
+X-HMX-From: <carlos8f@h-mx.net> "6f:2a:cd:0b:02:19:35:ab:62:65:58:c7:91:be:32:64"
+X-HMX-Expires: Thu, 01 Dec 1994 16:00:00 GMT
 X-HMX-Subject: Testing HMX
 X-HMX-Agent: node-hmx/1.0
 X-HMX-Difficulty: 6
@@ -86,7 +97,6 @@ X-HMX-Signature: AgICAgICAgICAgICAgIHJyZWYgU3ludGgtTm9kZSA6PGF1bj5vZGUpKSk=
 
 (body)
 ```
-
 
 - - -
 

@@ -37,8 +37,8 @@ Date: Tue, 15 Nov 1994 08:12:31 GMT
 Content-Length: 3473
 Expires: Tue, 15 Nov 1994 08:12:31 GMT
 Link: </0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c>; rel="prev", </000000ae26ee5322ef722a193a1cc01cdc41ae39b789df0d906bd6cf63d756bc>; rel="http://h-mx.org/spec/key"
-X-HMX-Type: private
 X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
+X-HMX-Type: private
 X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
 X-HMX-Private: (encrypted private headers, base64)
 X-HMX-Nonce: 1
@@ -55,8 +55,8 @@ Date: Tue, 15 Nov 1994 08:12:31 GMT
 Content-Length: 3473
 Expires: Tue, 15 Nov 1994 08:12:31 GMT
 Link: </0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c>; rel="prev"
-X-HMX-Type: key
 X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
+X-HMX-Type: key
 X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
 X-HMX-Nonce: 1
 X-HMX-Hash: 00000012f95b5826c2c2816fd960252302492abbbd1f8a7dadabe6f3e029d0ba
@@ -75,8 +75,8 @@ Date: Tue, 15 Nov 1994 08:12:31 GMT
 Content-Type: text/plain
 Content-Length: 3473
 Link: </0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c>; rel="prev", <hmx://h-mx.net/groups/test>; rel="section", <hmx://h-mx.net/groups/test/threads/mcpwAqQv>; rel="subsection"
-X-HMX-Type: public
 X-HMX-Last: 0000008e7e7a68b713b81393fda98ab78f6b32bc0987b8c2f82a41dab482a32c
+X-HMX-Type: public
 X-HMX-Digest: 408dda08d61eb5385bfd6ba1a3455c2ff1a4872a9ada0fc1a900de8373f5b018
 X-HMX-Part: 1/1
 X-HMX-Multi-Digest: de64152f540f23b96a179e489ba3dacaf579dc8dc23ccc5a546f97660f174be1

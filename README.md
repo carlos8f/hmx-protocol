@@ -54,7 +54,7 @@ HMX: 1.0/public
 HMX-Content-Digest: nYmlRrhDTkc2SlDokGktVl9xucIUNlb1BChMUvXp1oy
 HMX-From: <carlos8f@h-mx.net> "6f:2a:cd:0b:02:19:35:ab:62:65:58:c7:91:be:32:64"
 HMX-Subject: Testing HMX
-HMX-Agent: node-hmx/1.0
+HMX-Agent: node-hmx/1.0; https://h-mx.org/agent
 HMX-Time: 1396738992998
 HMX-Id: jaMHiVNo_MpTmVUDQH-VDDKR6x00r1Ejf1AKx-W98Ak
 HMX-Signature: oqQz5gwGap7axNtsQsceTVbRtQj74wj0zptal21BpYn

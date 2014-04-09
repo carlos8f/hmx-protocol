@@ -5,84 +5,55 @@ Library for working with HMX messages and blockchain
 ### private message
 
 ```
+GET /jaMHiVNo_MpTmVUD
+
 HTTP/1.1 200 OK
 Date: Tue, 15 Nov 1994 08:12:31 GMT
 Content-Length: 3473
-Expires: Tue, 15 Nov 1994 08:12:31 GMT
-Link: </eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf>; rel="prev"
+Content-Type: application/hmx
+Link: </eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf>; rel="prev", </2h-92i_KZEb05u2_48JYCSnSbRZd_Hio32ZaJGJH3Vc>; rel="next"
 HMX: 1.0/private
-HMX-Cipher: aes-256-cbc
 HMX-Key: igkopauD8k0GzuG8b0LLgfKMtpEOswSuqwW1OIHFpfv
 HMX-Digest: nYmlRrhDTkc2SlDokGktVl9xucIUNlb1BChMUvXp1oy
-HMX-Key-Digest: oqQz5gwGap7axNtsQsceTVbRtQj74wj0zptal21BpYn
-HMX-Private: (encrypted private headers, base64)
 HMX-Id: jaMHiVNo_MpTmVUDQH-VDDKR6x00r1Ejf1AKx-W98Ak
 
-(aes-encrypted body)
+(encrypted private headers)
 ```
 
-servers can enforce:
-
-- `Expires` header w/ maximum date
-- After expires date, `GET` request returns `410 Gone`, `HEAD` returns `204 No Content`
-- `Authorization` header w/ current session ID/signature (not stored, not part of hash)
-- max `Content-Length` per message
-- `Difficulty` for hashcash
-
-### private message w/ external key list
+#### private headers
 
 ```
-HTTP/1.1 200 OK
-Date: Tue, 15 Nov 1994 08:12:31 GMT
-Content-Length: 3473
-Expires: Tue, 15 Nov 1994 08:12:31 GMT
-Link: </eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf>; rel="prev", </TzdNEPJ69p7LWSrL80tTDQodhTqsEaMEIv2Vbmk_KJ6>; rel="http://h-mx.org/spec/key"
-HMX: 1.0/private
+HMX-Location: https://mybucket.s3.amazonaws.com/myobject.encrypted
+HMX-Content-Type: application/x-compressed
+HMX-Content-Disposition: attachment; filename="encrypted.tar.gz"
+HMX-Content-Digest: kkO7HiRigl-RUfNRNXqv-1y4qkBJCx0e-1hKleYjqsE
 HMX-Cipher: aes-256-cbc
-HMX-Digest: nYmlRrhDTkc2SlDokGktVl9xucIUNlb1BChMUvXp1oy
-HMX-Key-Digest: eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf
-HMX-Private: (encrypted private headers, base64)
-HMX-Id: jaMHiVNo_MpTmVUDQH-VDDKR6x00r1Ejf1AKx-W98Ak
-
-(aes-encrypted body)
-```
-
-### key list
-
-```
-HTTP/1.1 200 OK
-Date: Tue, 15 Nov 1994 08:12:31 GMT
-Content-Length: 3473
-Expires: Tue, 15 Nov 1994 08:12:31 GMT
-Link: </duI3FV22wUlx6k-pr54HvTmmbsxMb_vP4eunaYZkkw2>; rel="prev"
-HMX: 1.0/key
-HMX-Digest: eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf
-HMX-Key-Digest: q5bQjv-GdCS_j1wlgiFgc6zwRh6tXsbxvmxNRibKUvP
-HMX-Id: jaMHiVNo_MpTmVUDQH-VDDKR6x00r1Ejf1AKx-W98Ak
-
-(each line constitutes an rsa-encrypted version of the same key)
-
-8kLZoiK2PqGPc1SlOwWRdVjATx6lQLdT0EynXxKttRo
-duI3FV22wUlx6k-pr54HvTmmbsxMb_vP4eunaYZkkw2
-oqQz5gwGap7axNtsQsceTVbRtQj74wj0zptal21BpYn
-q5bQjv-GdCS_j1wlgiFgc6zwRh6tXsbxvmxNRibKUvP
+HMX-From: <carlos8f@h-mx.net> "6f:2a:cd:0b:02:19:35:ab:62:65:58:c7:91:be:32:64"
+HMX-To: <alice@h-mx.net> "6f:2a:cd:0b:02:19:35:ab:62:65:58:c7:91:be:32:64"
+HMX-Subject: Testing HMX
+HMX-Time: 1396738992998
+HMX-Signature: BQ53nHce1X-0XTlGgSIbd-kS5hF2rrRNHwtm2lpde3Y
 ```
 
 ### public message board
 
+- posts are limited in byte size
+- content-type MUST be `text/plain` or `text/x-markdown`.
+- message MUST be signed by a registered public key
+- group/thread is chosen by client but may be whitelisted/blackslisted by server
+
 ```
+GET /public/comp.hackers/jaMHiVNo_MpTmVUD
+
 HTTP/1.1 200 OK
 Date: Tue, 15 Nov 1994 08:12:31 GMT
-Content-Type: text/plain
+Content-Type: text/x-markdown
 Content-Length: 3473
-Link: </TzdNEPJ69p7LWSrL80tTDQodhTqsEaMEIv2Vbmk_KJ6>; rel="prev"
+Link: </eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf>; rel="prev", </2h-92i_KZEb05u2_48JYCSnSbRZd_Hio32ZaJGJH3Vc>; rel="next"
 HMX: 1.0/public
-HMX-Digest: nYmlRrhDTkc2SlDokGktVl9xucIUNlb1BChMUvXp1oy
-HMX-Part: 1/1
+HMX-Content-Digest: nYmlRrhDTkc2SlDokGktVl9xucIUNlb1BChMUvXp1oy
 HMX-From: <carlos8f@h-mx.net> "6f:2a:cd:0b:02:19:35:ab:62:65:58:c7:91:be:32:64"
 HMX-Subject: Testing HMX
-HMX-Group: hackers
-HMX-Thread: 6xkypn6pneMt4N8t8vD3mizRg0Vnvd_niVbm2FfjQ2m
 HMX-Agent: node-hmx/1.0
 HMX-Time: 1396738992998
 HMX-Id: jaMHiVNo_MpTmVUDQH-VDDKR6x00r1Ejf1AKx-W98Ak

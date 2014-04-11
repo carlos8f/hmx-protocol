@@ -14,7 +14,7 @@ Content-Type: application/hmx
 Link: </eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf>; rel="prev", </2h-92i_KZEb05u2_48JYCSnSbRZd_Hio32ZaJGJH3Vc>; rel="next"
 HMX: 1.0/private
 HMX-Key: igkopauD8k0GzuG8b0LLgfKMtpEOswSuqwW1OIHFpfv (hash of a peer key)
-HMX-Digest: BQ53nHce1X-0XTlGgSIbd-kS5hF2rrRNHwtm2lpde3Y (hash of body)
+HMX-Digest: BQ53nHce1X-0XTlGgSIbd-kS5hF2rrRNHwtm2lpde3Y (hash of encrypted body)
 HMX-Id: jaMHiVNo_MpTmVUDQH-VDDKR6x00r1Ejf1AKx-W98Ak (hash of public HMX* headers, unique id)
 
 (encrypted body)
@@ -52,7 +52,7 @@ Content-Type: text/x-markdown
 Content-Length: 3473
 Link: </eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf>; rel="prev", </2h-92i_KZEb05u2_48JYCSnSbRZd_Hio32ZaJGJH3Vc>; rel="next"
 HMX: 1.0/public
-HMX-Digest: nYmlRrhDTkc2SlDokGktVl9xucIUNlb1BChMUvXp1oy
+HMX-Digest: nYmlRrhDTkc2SlDokGktVl9xucIUNlb1BChMUvXp1oy (hash of body)
 HMX-Content-Type: text/x-markdown (or text/plain)
 HMX-From: <carlos8f@h-mx.net> "6f:2a:cd:0b:02:19:35:ab:62:65:58:c7:91:be:32:64"
 HMX-To: <comp.hackers@h-mx.net>

@@ -13,7 +13,7 @@ Content-Length: 3473
 Content-Type: application/hmx
 Link: </eoiFDR1nq2libsxZvF7yiYUrfjVVyvl5iICffStv2kf>; rel="prev", </2h-92i_KZEb05u2_48JYCSnSbRZd_Hio32ZaJGJH3Vc>; rel="next"
 HMX: 1.0/private
-HMX-Key: igkopauD8k0GzuG8b0LLgfKMtpEOswSuqwW1OIHFpfv (hash of a locally cached private key)
+HMX-Key: igkopauD8k0GzuG8b0LLgfKMtpEOswSuqwW1OIHFpfv (hash of a peer key)
 HMX-Digest: BQ53nHce1X-0XTlGgSIbd-kS5hF2rrRNHwtm2lpde3Y (hash of body)
 HMX-Id: jaMHiVNo_MpTmVUDQH-VDDKR6x00r1Ejf1AKx-W98Ak (hash of public HMX* headers, unique id)
 
